@@ -8,7 +8,7 @@ module ApplicationCable
 
     private
       def set_current_user
-        if session = Session.find_by(id: cookies.signed[:session_id])
+        if session = Session.find_by(token: request.headers['Sec-WebSocket-Protocol']&.split(" ")[-1])
           self.current_user = session.user
         end
       end
